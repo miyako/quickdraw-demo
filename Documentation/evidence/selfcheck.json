@@ -1,0 +1,63 @@
+{
+	"when": "2026-11-25T14:50:14.114Z",
+	"checks": [
+		{
+			"name": "version",
+			"ok": true,
+			"detail": "{\"ok\":true,\"stdout\":\"{\\\"protocol\\\":1,\\\"version\\\":\\\"0.1.0\\\"}\\n\",\"stderr\":\"\",\"exitCode\":0,\"value\":{\"protocol\":1,\"version\":\"0.1.0\"}}"
+		},
+		{
+			"name": "capabilities",
+			"ok": true,
+			"detail": "formats: 3, max_pixels: 16000000"
+		},
+		{
+			"name": "strict rejection",
+			"ok": true,
+			"detail": "converter: unsupported — curve/polygon/complex region outline uses portable coverage requires --fidelity approximate · exit 5"
+		},
+		{
+			"name": "approximate inspect",
+			"ok": true,
+			"detail": "PICT v2, 30 top-level ops"
+		},
+		{
+			"name": "explicit font map",
+			"ok": true,
+			"detail": "without map: converter: unsupported — no explicit NFNT or outline font binding for id=7, size=3, face=0 · with map: ok"
+		},
+		{
+			"name": "resource inventory",
+			"ok": true,
+			"detail": "2 PICT, 1 NFNT"
+		},
+		{
+			"name": "png conversion",
+			"ok": true,
+			"detail": "selfcheck · 50391 bytes · ab64b10543169464…"
+		},
+		{
+			"name": "no-clobber",
+			"ok": true,
+			"detail": "converter: output_exists — output exists; use --overwrite for a different regular file · exit 3"
+		},
+		{
+			"name": "pixel budget",
+			"ok": true,
+			"detail": "converter: resource_limit — pixel limit exceeded · no partial file"
+		},
+		{
+			"name": "malformed input",
+			"ok": true,
+			"detail": "converter: malformed — missing or ambiguous container signature; select --container explicitly · exit 4"
+		},
+		{
+			"name": "approximate preview",
+			"ok": true,
+			"detail": "requested strict SVG, previewed PNG"
+		}
+	],
+	"passed": 11,
+	"total": 11,
+	"finished": true
+}

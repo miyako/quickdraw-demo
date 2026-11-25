@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.pict binary
+*.rsrc binary
+*.nfnt binary
+*.png binary
+*.pdf binary

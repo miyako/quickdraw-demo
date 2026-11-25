@@ -1,0 +1,739 @@
+{
+	"$4d": {
+		"version": "1",
+		"kind": "form"
+	},
+	"windowTitle": "QuickDraw Lab",
+	"windowSizingX": "variable",
+	"windowSizingY": "variable",
+	"windowMinWidth": 1160,
+	"windowMinHeight": 900,
+	"windowMaxWidth": 32767,
+	"windowMaxHeight": 32767,
+	"rightMargin": 20,
+	"bottomMargin": 20,
+	"width": 1180,
+	"height": 920,
+	"destination": "detailScreen",
+	"method": "method.4dm",
+	"events": ["onLoad"],
+	"pages": [
+		{
+			"objects": {}
+		},
+		{
+			"objects": {
+				"grpSample": {
+					"type": "groupBox",
+					"text": "1 · Sample & container",
+					"left": 20,
+					"top": 78,
+					"width": 320,
+					"height": 282
+				},
+				"grpInspect": {
+					"type": "groupBox",
+					"text": "2 · Inspect & inventory",
+					"left": 20,
+					"top": 372,
+					"width": 320,
+					"height": 176
+				},
+				"grpEngine": {
+					"type": "groupBox",
+					"text": "Engine facts",
+					"left": 20,
+					"top": 560,
+					"width": 320,
+					"height": 160
+				},
+				"grpHelp": {
+					"type": "groupBox",
+					"text": "Quick tour",
+					"left": 20,
+					"top": 732,
+					"width": 320,
+					"height": 140
+				},
+				"grpPreview": {
+					"type": "groupBox",
+					"text": "3 · Preview (always an approximate PNG)",
+					"left": 356,
+					"top": 78,
+					"width": 536,
+					"height": 432
+				},
+				"grpRows": {
+					"type": "groupBox",
+					"text": "Evidence",
+					"left": 356,
+					"top": 522,
+					"width": 536,
+					"height": 190
+				},
+				"grpJson": {
+					"type": "groupBox",
+					"text": "Response envelope (JSON)",
+					"left": 356,
+					"top": 724,
+					"width": 536,
+					"height": 150
+				},
+				"grpOptions": {
+					"type": "groupBox",
+					"text": "4 · Conversion options",
+					"left": 908,
+					"top": 78,
+					"width": 252,
+					"height": 494
+				},
+				"grpExperiments": {
+					"type": "groupBox",
+					"text": "5 · Reproduce a failure",
+					"left": 908,
+					"top": 584,
+					"width": 252,
+					"height": 288
+				},
+				"txtTitle": {
+					"type": "text",
+					"text": "QuickDraw Lab",
+					"left": 20,
+					"top": 12,
+					"width": 600,
+					"height": 30,
+					"fontSize": 22,
+					"fontWeight": "bold"
+				},
+				"txtSub": {
+					"type": "text",
+					"text": "Classic PICT inspection and conversion through cs.QuickDraw.Converter — strict by default, evidence always retained",
+					"left": 20,
+					"top": 46,
+					"width": 860,
+					"height": 20,
+					"fontSize": 12
+				},
+				"txtBadge1": {
+					"type": "text",
+					"text": "component 0.1.3",
+					"left": 940,
+					"top": 16,
+					"width": 220,
+					"height": 18,
+					"textAlign": "right",
+					"fontSize": 11,
+					"fontStyle": "italic"
+				},
+				"txtBadge2": {
+					"type": "text",
+					"text": "CLI protocol 1 · 30 s timeout",
+					"left": 940,
+					"top": 34,
+					"width": 220,
+					"height": 18,
+					"textAlign": "right",
+					"fontSize": 11,
+					"fontStyle": "italic"
+				},
+				"lblSample": {
+					"type": "text",
+					"text": "Sample file",
+					"left": 34,
+					"top": 102,
+					"width": 120,
+					"height": 16,
+					"fontSize": 11
+				},
+				"dropSample": {
+					"type": "dropdown",
+					"dataSource": "Form.sample",
+					"dataSourceTypeHint": "object",
+					"left": 34,
+					"top": 120,
+					"width": 292,
+					"height": 24,
+					"method": "ObjectMethods/dropSample.4dm",
+					"events": ["onDataChange"]
+				},
+				"btnOpen": {
+					"type": "button",
+					"text": "Open file…",
+					"left": 34,
+					"top": 152,
+					"width": 140,
+					"height": 24,
+					"fontSize": 12,
+					"method": "ObjectMethods/btnOpen.4dm",
+					"events": ["onClick"]
+				},
+				"btnRescan": {
+					"type": "button",
+					"text": "Rescan samples",
+					"left": 182,
+					"top": 152,
+					"width": 144,
+					"height": 24,
+					"fontSize": 12,
+					"method": "ObjectMethods/btnRescan.4dm",
+					"events": ["onClick"]
+				},
+				"chkDataFork": {
+					"type": "checkbox",
+					"text": "data fork",
+					"dataSource": "Form.dataFork",
+					"left": 34,
+					"top": 184,
+					"width": 130,
+					"height": 20,
+					"fontSize": 12,
+					"method": "ObjectMethods/chkDataFork.4dm",
+					"events": ["onClick"]
+				},
+				"inResourceId": {
+					"type": "input",
+					"dataSource": "Form.resourceId",
+					"dataSourceTypeHint": "text",
+					"left": 190,
+					"top": 182,
+					"width": 80,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"placeholder": "resource id",
+					"method": "ObjectMethods/inResourceId.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"lblContainer": {
+					"type": "text",
+					"text": "Container",
+					"left": 34,
+					"top": 214,
+					"width": 100,
+					"height": 16,
+					"fontSize": 11
+				},
+				"dropContainer": {
+					"type": "dropdown",
+					"dataSource": "Form.container",
+					"dataSourceTypeHint": "object",
+					"left": 34,
+					"top": 232,
+					"width": 292,
+					"height": 24,
+					"method": "ObjectMethods/dropContainer.4dm",
+					"events": ["onDataChange"]
+				},
+				"chkFontMap": {
+					"type": "checkbox",
+					"text": "Explicit font map (fonts.json)",
+					"dataSource": "Form.fontMap",
+					"left": 34,
+					"top": 264,
+					"width": 292,
+					"height": 20,
+					"fontSize": 12,
+					"method": "ObjectMethods/chkFontMap.4dm",
+					"events": ["onClick"]
+				},
+				"txtSampleHint": {
+					"type": "input",
+					"dataSource": "Form.sampleHint",
+					"dataSourceTypeHint": "text",
+					"left": 34,
+					"top": 290,
+					"width": 292,
+					"height": 58,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"btnInspect": {
+					"type": "button",
+					"text": "Inspect",
+					"left": 34,
+					"top": 398,
+					"width": 92,
+					"height": 24,
+					"fontSize": 12,
+					"method": "ObjectMethods/btnInspect.4dm",
+					"events": ["onClick"]
+				},
+				"btnPictures": {
+					"type": "button",
+					"text": "Pictures",
+					"left": 134,
+					"top": 398,
+					"width": 92,
+					"height": 24,
+					"fontSize": 12,
+					"method": "ObjectMethods/btnPictures.4dm",
+					"events": ["onClick"]
+				},
+				"btnFonts": {
+					"type": "button",
+					"text": "Fonts",
+					"left": 234,
+					"top": 398,
+					"width": 92,
+					"height": 24,
+					"fontSize": 12,
+					"method": "ObjectMethods/btnFonts.4dm",
+					"events": ["onClick"]
+				},
+				"txtInspect": {
+					"type": "input",
+					"dataSource": "Form.inspect",
+					"dataSourceTypeHint": "text",
+					"left": 34,
+					"top": 430,
+					"width": 292,
+					"height": 106,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 11,
+					"borderStyle": "none"
+				},
+				"txtEngine": {
+					"type": "input",
+					"dataSource": "Form.engine",
+					"dataSourceTypeHint": "text",
+					"left": 34,
+					"top": 586,
+					"width": 292,
+					"height": 122,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"txtHelp": {
+					"type": "input",
+					"dataSource": "Form.help",
+					"dataSourceTypeHint": "text",
+					"left": 34,
+					"top": 758,
+					"width": 292,
+					"height": 104,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"preview": {
+					"type": "input",
+					"dataSource": "Form.preview",
+					"dataSourceTypeHint": "picture",
+					"left": 370,
+					"top": 106,
+					"width": 508,
+					"height": 344,
+					"borderStyle": "solid",
+					"dragging": "none",
+					"dropping": "none"
+				},
+				"txtPreview": {
+					"type": "input",
+					"dataSource": "Form.previewInfo",
+					"dataSourceTypeHint": "text",
+					"left": 370,
+					"top": 456,
+					"width": 508,
+					"height": 44,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"lbRows": {
+					"type": "listbox",
+					"listboxType": "collection",
+					"dataSource": "Form.rows",
+					"left": 370,
+					"top": 548,
+					"width": 508,
+					"height": 152,
+					"resizingMode": "legacy",
+					"rowHeight": "22px",
+					"columns": [
+						{
+							"name": "colKind",
+							"dataSource": "This.kind",
+							"width": 120,
+							"minWidth": 80,
+							"truncateMode": "none",
+							"header": { "name": "hdrKind", "text": "Field" },
+							"footer": { "name": "ftrKind", "truncateMode": "none" }
+						},
+						{
+							"name": "colDetail",
+							"dataSource": "This.detail",
+							"width": 240,
+							"minWidth": 120,
+							"truncateMode": "none",
+							"header": { "name": "hdrDetail", "text": "Detail" },
+							"footer": { "name": "ftrDetail", "truncateMode": "none" }
+						},
+						{
+							"name": "colExtra",
+							"dataSource": "This.extra",
+							"width": 148,
+							"minWidth": 80,
+							"truncateMode": "none",
+							"header": { "name": "hdrExtra", "text": "Extra" },
+							"footer": { "name": "ftrExtra", "truncateMode": "none" }
+						}
+					]
+				},
+				"txtJSON": {
+					"type": "input",
+					"dataSource": "Form.json",
+					"dataSourceTypeHint": "text",
+					"left": 370,
+					"top": 750,
+					"width": 508,
+					"height": 112,
+					"enterable": false,
+					"multiline": "yes",
+					"fontFamily": "Menlo",
+					"fontSize": 10,
+					"borderStyle": "solid"
+				},
+				"lblFormat": {
+					"type": "text",
+					"text": "Format",
+					"left": 922,
+					"top": 100,
+					"width": 100,
+					"height": 16,
+					"fontSize": 11
+				},
+				"dropFormat": {
+					"type": "dropdown",
+					"dataSource": "Form.format",
+					"dataSourceTypeHint": "object",
+					"left": 922,
+					"top": 118,
+					"width": 224,
+					"height": 24,
+					"method": "ObjectMethods/dropFormat.4dm",
+					"events": ["onDataChange"]
+				},
+				"lblFidelity": {
+					"type": "text",
+					"text": "Fidelity",
+					"left": 922,
+					"top": 148,
+					"width": 100,
+					"height": 16,
+					"fontSize": 11
+				},
+				"dropFidelity": {
+					"type": "dropdown",
+					"dataSource": "Form.fidelity",
+					"dataSourceTypeHint": "object",
+					"left": 922,
+					"top": 166,
+					"width": 224,
+					"height": 24,
+					"method": "ObjectMethods/dropFidelity.4dm",
+					"events": ["onDataChange"]
+				},
+				"lblVector": {
+					"type": "text",
+					"text": "Vector policy",
+					"left": 922,
+					"top": 196,
+					"width": 100,
+					"height": 16,
+					"fontSize": 11
+				},
+				"dropVector": {
+					"type": "dropdown",
+					"dataSource": "Form.vector",
+					"dataSourceTypeHint": "object",
+					"left": 922,
+					"top": 214,
+					"width": 224,
+					"height": 24,
+					"method": "ObjectMethods/dropVector.4dm",
+					"events": ["onDataChange"]
+				},
+				"lblPrinter": {
+					"type": "text",
+					"text": "Printer comments",
+					"left": 922,
+					"top": 244,
+					"width": 120,
+					"height": 16,
+					"fontSize": 11
+				},
+				"dropPrinter": {
+					"type": "dropdown",
+					"dataSource": "Form.printer",
+					"dataSourceTypeHint": "object",
+					"left": 922,
+					"top": 262,
+					"width": 224,
+					"height": 24,
+					"method": "ObjectMethods/dropPrinter.4dm",
+					"events": ["onDataChange"]
+				},
+				"lblDpi": {
+					"type": "text",
+					"text": "DPI",
+					"left": 922,
+					"top": 292,
+					"width": 60,
+					"height": 16,
+					"fontSize": 11
+				},
+				"inDpi": {
+					"type": "input",
+					"dataSource": "Form.dpi",
+					"dataSourceTypeHint": "text",
+					"left": 922,
+					"top": 310,
+					"width": 100,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"method": "ObjectMethods/inDpi.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"lblWidth": {
+					"type": "text",
+					"text": "Width",
+					"left": 1040,
+					"top": 292,
+					"width": 60,
+					"height": 16,
+					"fontSize": 11
+				},
+				"inWidth": {
+					"type": "input",
+					"dataSource": "Form.width",
+					"dataSourceTypeHint": "text",
+					"left": 1040,
+					"top": 310,
+					"width": 106,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"method": "ObjectMethods/inWidth.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"lblHeight": {
+					"type": "text",
+					"text": "Height",
+					"left": 922,
+					"top": 340,
+					"width": 60,
+					"height": 16,
+					"fontSize": 11
+				},
+				"inHeight": {
+					"type": "input",
+					"dataSource": "Form.height",
+					"dataSourceTypeHint": "text",
+					"left": 922,
+					"top": 358,
+					"width": 100,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"method": "ObjectMethods/inHeight.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"lblMaxPixels": {
+					"type": "text",
+					"text": "Max pixels",
+					"left": 1040,
+					"top": 340,
+					"width": 90,
+					"height": 16,
+					"fontSize": 11
+				},
+				"inMaxPixels": {
+					"type": "input",
+					"dataSource": "Form.maxPixels",
+					"dataSourceTypeHint": "text",
+					"left": 1040,
+					"top": 358,
+					"width": 106,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"method": "ObjectMethods/inMaxPixels.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"lblBackground": {
+					"type": "text",
+					"text": "Background",
+					"left": 922,
+					"top": 388,
+					"width": 90,
+					"height": 16,
+					"fontSize": 11
+				},
+				"inBackground": {
+					"type": "input",
+					"dataSource": "Form.background",
+					"dataSourceTypeHint": "text",
+					"left": 922,
+					"top": 406,
+					"width": 100,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"placeholder": "RRGGBB",
+					"method": "ObjectMethods/inBackground.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"lblHighlight": {
+					"type": "text",
+					"text": "Highlight",
+					"left": 1040,
+					"top": 388,
+					"width": 90,
+					"height": 16,
+					"fontSize": 11
+				},
+				"inHighlight": {
+					"type": "input",
+					"dataSource": "Form.highlight",
+					"dataSourceTypeHint": "text",
+					"left": 1040,
+					"top": 406,
+					"width": 106,
+					"height": 22,
+					"fontSize": 11,
+					"borderStyle": "solid",
+					"placeholder": "RRGGBB",
+					"method": "ObjectMethods/inHighlight.4dm",
+					"events": ["onAfterEdit"]
+				},
+				"btnConvert": {
+					"type": "button",
+					"text": "Convert & preview",
+					"left": 922,
+					"top": 444,
+					"width": 224,
+					"height": 28,
+					"fontSize": 12,
+					"fontWeight": "bold",
+					"defaultButton": true,
+					"method": "ObjectMethods/btnConvert.4dm",
+					"events": ["onClick"]
+				},
+				"btnReset": {
+					"type": "button",
+					"text": "Reset to defaults",
+					"left": 922,
+					"top": 478,
+					"width": 224,
+					"height": 22,
+					"fontSize": 11,
+					"method": "ObjectMethods/btnReset.4dm",
+					"events": ["onClick"]
+				},
+				"txtOptionsHint": {
+					"type": "input",
+					"dataSource": "Form.optionsHint",
+					"dataSourceTypeHint": "text",
+					"left": 922,
+					"top": 506,
+					"width": 224,
+					"height": 60,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"txtExpIntro": {
+					"type": "input",
+					"dataSource": "Form.expIntro",
+					"dataSourceTypeHint": "text",
+					"left": 922,
+					"top": 606,
+					"width": 224,
+					"height": 34,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"btnNoClobber": {
+					"type": "button",
+					"text": "No-clobber (exit 3)",
+					"left": 922,
+					"top": 644,
+					"width": 224,
+					"height": 24,
+					"fontSize": 11,
+					"method": "ObjectMethods/btnNoClobber.4dm",
+					"events": ["onClick"]
+				},
+				"btnLimit": {
+					"type": "button",
+					"text": "Pixel budget (exit 6)",
+					"left": 922,
+					"top": 674,
+					"width": 224,
+					"height": 24,
+					"fontSize": 11,
+					"method": "ObjectMethods/btnLimit.4dm",
+					"events": ["onClick"]
+				},
+				"btnAlias": {
+					"type": "button",
+					"text": "Input == output (exit 3)",
+					"left": 922,
+					"top": 704,
+					"width": 224,
+					"height": 24,
+					"fontSize": 11,
+					"method": "ObjectMethods/btnAlias.4dm",
+					"events": ["onClick"]
+				},
+				"btnMalformed": {
+					"type": "button",
+					"text": "Malformed PICT (exit 4)",
+					"left": 922,
+					"top": 734,
+					"width": 224,
+					"height": 24,
+					"fontSize": 11,
+					"method": "ObjectMethods/btnMalformed.4dm",
+					"events": ["onClick"]
+				},
+				"txtExpHint": {
+					"type": "input",
+					"dataSource": "Form.expHint",
+					"dataSourceTypeHint": "text",
+					"left": 922,
+					"top": 766,
+					"width": 224,
+					"height": 96,
+					"enterable": false,
+					"multiline": "yes",
+					"fontSize": 10,
+					"borderStyle": "none"
+				},
+				"txtStatus": {
+					"type": "input",
+					"dataSource": "Form.status",
+					"dataSourceTypeHint": "text",
+					"left": 20,
+					"top": 884,
+					"width": 1140,
+					"height": 20,
+					"enterable": false,
+					"fontSize": 11,
+					"borderStyle": "none"
+				}
+			}
+		}
+	]
+}

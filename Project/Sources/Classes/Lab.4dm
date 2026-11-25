@@ -1,0 +1,242 @@
+// Lab — thin, UI-agnostic wrapper around cs.QuickDraw.Converter.
+// The form only owns presentation; every CLI call goes through this class.
+
+property target : Text
+property converter : Object
+property samplesFolder : 4D.Folder
+property outputFolder : 4D.Folder
+property previewFolder : 4D.Folder
+
+Class constructor
+
+	This.target:="macOS-universal"
+	If (Is Windows)
+		This.target:="Windows-x64"
+	End if
+	This.converter:=cs.QuickDraw.Converter.new(This.target)
+	var $resources : Text
+	var $database : Text
+	var $temporary : Text
+	If (Is Windows)
+		$resources:=Get 4D folder(Current resources folder)
+		$database:=Get 4D folder(Database folder)
+		$temporary:=Get 4D folder(Temporary folder)
+		This.samplesFolder:=Folder($resources+"Samples"; fk platform path)
+		This.outputFolder:=Folder($database+"Output"; fk platform path)
+		This.previewFolder:=Folder($temporary+"quickdraw-demo"; fk platform path)
+	Else
+		$resources:=Convert path system to POSIX(Get 4D folder(Current resources folder))
+		$database:=Convert path system to POSIX(Get 4D folder(Database folder))
+		$temporary:=Convert path system to POSIX(Get 4D folder(Temporary folder))
+		This.samplesFolder:=Folder($resources+"Samples"; fk posix path)
+		This.outputFolder:=Folder($database+"Output"; fk posix path)
+		This.previewFolder:=Folder($temporary+"quickdraw-demo"; fk posix path)
+	End if
+	If (Not(This.outputFolder.exists))
+		var $created : Boolean
+		$created:=This.outputFolder.create()
+	End if
+	If (Not(This.previewFolder.exists))
+		var $createdPreview : Boolean
+		$createdPreview:=This.previewFolder.create()
+	End if
+
+// Names of sample files shipped in /RESOURCES/Samples, sorted.
+Function samples() : Collection
+
+	var $names : Collection
+	$names:=New collection()
+	var $file : 4D.File
+	For each ($file; This.samplesFolder.files())
+		var $extension : Text
+		$extension:=Lowercase($file.extension)
+		If (($extension="pict") || ($extension="rsrc"))
+			$names.push($file.name)
+		End if
+	End for each
+	$names.sort()
+	return $names
+
+Function sampleFile($name : Text) : 4D.File
+
+	return This.samplesFolder.file($name)
+
+Function version() : Object
+
+	return This.converter.version()
+
+Function capabilities() : Object
+
+	return This.converter.capabilities()
+
+Function inspect($input : 4D.File; $options : Object) : Object
+
+	var $result : Object
+	$result:=This.converter.inspect($input; $options)
+	return $result
+
+Function listPictures($input : 4D.File; $options : Object) : Object
+
+	var $result : Object
+	$result:=This.converter.listPictures($input; $options)
+	return $result
+
+Function listFonts($input : 4D.File; $options : Object) : Object
+
+	var $result : Object
+	$result:=This.converter.listFonts($input; $options)
+	return $result
+
+Function convert($input : 4D.File; $output : 4D.File; $options : Object) : Object
+
+	var $result : Object
+	$result:=This.converter.convert($input; $output; $options)
+	return $result
+
+// Object-based dropdown value, resilient to a missing currentValue.
+Function choice($drop : Object) : Text
+
+	var $value : Text
+	$value:=""
+	var $index : Integer
+	$index:=-1
+	If (Value type($drop.index)=Is number)
+		$index:=$drop.index
+	End if
+	If ((Value type($drop.values)=Is collection) && ($index>=0) && ($index<$drop.values.length))
+		$value:=String($drop.values[$index])
+	End if
+	If ($value="")
+		If (Value type($drop.currentValue)=Is text)
+			$value:=$drop.currentValue
+		End if
+	End if
+	return $value
+
+Function isInteger($text : Text) : Boolean
+
+	return Match regex("^-?[0-9]+$"; Trim($text))
+
+Function isPositiveInteger($text : Text) : Boolean
+
+	return Match regex("^[0-9]+$"; Trim($text))
+
+Function isDecimal($text : Text) : Boolean
+
+	return Match regex("^[0-9]+([.][0-9]+)?$"; Trim($text))
+
+Function isColor($text : Text) : Boolean
+
+	return Match regex("^[0-9A-Fa-f]{6}$"; Trim($text))
+
+// Input-scope options only: valid for inspect, list-pictures and list-fonts.
+Function inputOptions($form : Object; $withSelection : Boolean) : Object
+
+	var $options : Object
+	$options:=New object()
+	$options["container"]:=This.choice($form.container)
+	If (This.isPositiveInteger(String($form.maxPixels)))
+		$options["max-pixels"]:=Trim(String($form.maxPixels))
+	End if
+	If ($withSelection)
+		If (Bool($form.dataFork))
+			$options["data-fork"]:=True
+		Else
+			If (This.isInteger(String($form.resourceId)))
+				$options["resource-id"]:=Trim(String($form.resourceId))
+			End if
+		End if
+	End if
+	return $options
+
+// Full convert options, plus selection and explicit font map.
+Function convertOptions($form : Object) : Object
+
+	var $options : Object
+	$options:=This.inputOptions($form; True)
+	$options["format"]:=This.choice($form.format)
+	$options["fidelity"]:=This.choice($form.fidelity)
+	$options["printer-comments"]:=This.choice($form.printer)
+	If ($options.format#"png")
+		$options["vector-policy"]:=This.choice($form.vector)
+	End if
+	If (This.isPositiveInteger(String($form.width)))
+		$options["width"]:=Trim(String($form.width))
+	End if
+	If (This.isPositiveInteger(String($form.height)))
+		$options["height"]:=Trim(String($form.height))
+	End if
+	If (This.isDecimal(String($form.dpi)))
+		$options["dpi"]:=Trim(String($form.dpi))
+	End if
+	If (This.isColor(String($form.background)))
+		$options["background"]:=Trim(String($form.background))
+	End if
+	If (This.isColor(String($form.highlight)))
+		$options["highlight"]:=Trim(String($form.highlight))
+	End if
+	If (Bool($form.fontMap))
+		$options["font-map"]:=This.samplesFolder.file("fonts.json")
+	End if
+	return $options
+
+// Always rasterise a PNG preview, even when the chosen output is SVG/PDF or
+// when strict mode rejects the picture. Approximation is explicit and scoped
+// to the preview path only.
+Function preview($input : 4D.File; $options : Object) : Object
+
+	var $pngOptions : Object
+	$pngOptions:=OB Copy($options; True)
+	$pngOptions["format"]:="png"
+	$pngOptions["fidelity"]:="approximate"
+	$pngOptions["overwrite"]:=True
+	If ($pngOptions["vector-policy"] #Null)
+		OB REMOVE($pngOptions; "vector-policy")
+	End if
+	var $file : 4D.File
+	$file:=This.previewFolder.file("preview.png")
+	If ($file.exists)
+		var $deleted : Boolean
+		$deleted:=$file.delete()
+	End if
+	var $result : Object
+	$result:=This.converter.convert($input; $file; $pngOptions)
+	var $picture : Picture
+	If (Bool($result.ok))
+		READ PICTURE FILE($file.platformPath; $picture)
+	End if
+	return New object("result"; $result; "picture"; $picture; "file"; $file)
+
+Function digest($file : 4D.File) : Text
+
+	If ($file.exists)
+		var $blob : Blob
+		$blob:=$file.getContent()
+		var $digest : Text
+		$digest:=Generate digest($blob; SHA256 digest)
+		return Lowercase($digest)
+	End if
+	return ""
+
+// Human-readable error line, including the CLI's offset/opcode evidence.
+Function failureText($result : Object) : Text
+
+	If (Bool($result.ok))
+		return "ok"
+	End if
+	var $text : Text
+	$text:=String($result.failureKind)
+	If (Value type($result.error)=Is object)
+		$text:=$text+": "+String($result.error.code)
+		If (String($result.error.message)#"")
+			$text:=$text+" — "+String($result.error.message)
+		End if
+		If (Value type($result.error.offset)=Is number)
+			$text:=$text+" (offset "+String($result.error.offset)
+			If (Value type($result.error.opcode)=Is number)
+				$text:=$text+", opcode "+String($result.error.opcode)
+			End if
+			$text:=$text+")"
+		End if
+	End if
+	return $text

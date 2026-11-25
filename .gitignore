@@ -1,0 +1,25 @@
+# 4D
+DerivedData/
+Settings/
+Components/
+Data/
+*.4DDiag
+*.4DZ
+*.4dbase/
+
+# demo output
+Output/
+Resources/Output/
+userPreferences.*/
+
+# scratch
+*.preview.png
+
+# provisioned tools (see .agents/skills/4dtools)
+tools/4dform/
+tools/4dlsp/
+tools/4dlang/
+tools/4dcatalog/
+
+# macOS
+.DS_Store

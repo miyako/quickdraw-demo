@@ -1,0 +1,9 @@
+{
+  "version": 2100,
+  "dependencies": {
+    "quickdraw": {
+      "github": "miyako/quickdraw",
+      "tag": "0.1.3"
+    }
+  }
+}
