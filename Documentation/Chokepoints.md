@@ -172,4 +172,10 @@ The original 11 checks only drove the class, so these shipped unnoticed:
 * `FORM SCREENSHOT` captures of this form are transparent in dark appearance;
   composite over `#1E1E1E` before judging layout (see `4dform`
   screenshot-rendering).
+* **`Get 4D folder(Temporary folder)` does not compile** (`Impossible to cast
+  Text to *`, twice in the `Lab` constructor): `Temporary folder` is its own
+  command, not a selector. The interpreter tolerated it, so only a compile run
+  showed it. The constructor now uses `Temporary folder` and falls back to
+  `Output/preview` when it is empty. A tool4d `Compile project` of a scratch copy
+  (component staged, empty dependency declaration) now returns `success:true`.
 

@@ -16,21 +16,32 @@ Class constructor
 	This.converter:=cs.QuickDraw.Converter.new(This.target)
 	var $resources : Text
 	var $database : Text
-	var $temporary : Text
 	If (Is Windows)
 		$resources:=Get 4D folder(Current resources folder)
 		$database:=Get 4D folder(Database folder)
-		$temporary:=Get 4D folder(Temporary folder)
 		This.samplesFolder:=Folder($resources+"Samples"; fk platform path)
 		This.outputFolder:=Folder($database+"Output"; fk platform path)
-		This.previewFolder:=Folder($temporary+"quickdraw-demo"; fk platform path)
 	Else
 		$resources:=Convert path system to POSIX(Get 4D folder(Current resources folder))
 		$database:=Convert path system to POSIX(Get 4D folder(Database folder))
-		$temporary:=Convert path system to POSIX(Get 4D folder(Temporary folder))
 		This.samplesFolder:=Folder($resources+"Samples"; fk posix path)
 		This.outputFolder:=Folder($database+"Output"; fk posix path)
-		This.previewFolder:=Folder($temporary+"quickdraw-demo"; fk posix path)
+	End if
+	// Get 4D folder has no temporary-folder selector (the compiler rejects it);
+	// use the Temporary folder command. It can be empty under tool4d --dataless,
+	// so fall back to Output/preview.
+	var $temporary : Text
+	$temporary:=Temporary folder
+	This.previewFolder:=Null
+	If ($temporary#"")
+		If (Is Windows)
+			This.previewFolder:=Folder($temporary+"quickdraw-demo"; fk platform path)
+		Else
+			This.previewFolder:=Folder(Convert path system to POSIX($temporary)+"quickdraw-demo"; fk posix path)
+		End if
+	End if
+	If (This.previewFolder=Null)
+		This.previewFolder:=This.outputFolder.folder("preview")
 	End if
 	If (Not(This.outputFolder.exists))
 		var $created : Boolean
