@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Shared result renderer for experiments: rows + raw envelope JSON.
 #DECLARE($result : Object; $title : Text)
 
@@ -35,6 +36,7 @@ If (Bool($result.ok))
 		$rows.push(New object("kind";"profile";"detail";String($value.vector_profile);"extra";"raster "+String($value.raster_profile)+" · outline "+String($value.outline_profile)))
 	End if
 	var $diagnostics : Variant
+	var $diagnostic : Object
 	$diagnostics:=$value.diagnostics
 	If (Value type($diagnostics)=Is collection)
 		For each ($diagnostic; $diagnostics)
@@ -46,7 +48,7 @@ Else
 	$rows.push(New object("kind";"result";"detail";$title+" — failed";"extra";String($result.failureKind)))
 	If (Value type($result.error)=Is object)
 		$rows.push(New object("kind";"error";"detail";String($result.error.code);"extra";String($result.error.message)))
-		If (Value type($result.error.offset)=Is number)
+		If (Value type($result.error.offset)=Is real)
 			$rows.push(New object("kind";"location";"detail";"offset "+String($result.error.offset);"extra";"opcode "+String($result.error.opcode)))
 		End if
 	End if

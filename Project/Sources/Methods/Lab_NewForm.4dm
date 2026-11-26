@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 #DECLARE() : Object
 
 var $form : Object

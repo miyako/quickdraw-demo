@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Enumerate NFNT/FONT/FOND resources in the current container.
 #DECLARE()
 
@@ -13,6 +14,7 @@ If (Bool($result.ok))
 	var $inventory : Object
 	$inventory:=$result.value.inventory
 	$rows.push(New object("kind";"inventory";"detail";String($inventory.container);"extra";String($inventory.resources.length)+" font resources"))
+	var $entry : Object
 	For each ($entry; $inventory.resources)
 		$rows.push(New object("kind";String($entry.type)+" "+String($entry.resource_id);"detail";String($entry.name_hex);"extra";String($entry.length)+" B @ offset "+String($entry.offset)))
 	End for each

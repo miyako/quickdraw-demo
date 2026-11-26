@@ -137,3 +137,30 @@ class now centralises this in `Lab.choice()`.
 4. **`4dcomponent`/`quickdraw` docs are external to this repo** — no edit
    proposed beyond reporting the inspect-vs-convert option split, which the
    component's own documentation already implies but does not contrast.
+
+## Review round: defects found by exercising the UI paths
+
+The original 11 checks only drove the class, so these shipped unnoticed:
+
+* **`Value type(...)=Is number`** (six places). `Is number` is not what
+  `Value type` returns; object numbers are `Is real` (`4dlang` pitfalls). Effects:
+  the dropdown `index` was never used (selections fell back to the write-once
+  `currentValue`), error `offset`/`opcode` were dropped from every message, and
+  `Select document` (which returns Text) made `Open…` a no-op.
+* **`"0x"+String(opcode; "&x")`** printed `0x0x0051`: the `&x` format already
+  includes the prefix.
+* **Inputs on `On After Edit`** read the pre-edit value and ran a CLI call per
+  keystroke; they now use `On Data Change`. Container, data-fork and resource-ID
+  changes also refresh the preview, not just the inspection.
+* **No-clobber experiment** used the visible options; on the default strict
+  `poster.pict` the first write was rejected as `unsupported`, so exit 3 was never
+  shown. It now forces approximate fidelity.
+* **State leaks**: switching samples kept the previous data-fork/container;
+  Reset cleared `resource-id` (making `drawing.rsrc` ambiguous) and the font map;
+  Rescan dropped a file chosen with `Open…`; invalid numeric text was silently
+  ignored (now named in the status line).
+* **Inspect** showed an empty `selection:` (property is `resource_id`, not
+  `selected_resource`), and several `For each` variables were undeclared.
+* Form-dependent project methods were visible in Run Method; they are now
+  `invisible`. `.gitignore` tool entries are anchored per `4dproject`.
+

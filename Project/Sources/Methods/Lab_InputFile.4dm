@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 #DECLARE() : 4D.File
 
 var $file : 4D.File

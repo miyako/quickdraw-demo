@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Rasterise a preview independently of the requested output format.
 #DECLARE($input : 4D.File; $options : Object; $convertResult : Object)
 

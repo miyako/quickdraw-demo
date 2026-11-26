@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Inspect the current input with the current container/selection options.
 #DECLARE()
 
@@ -21,7 +22,17 @@ If (Bool($result.ok))
 	$rows.push(New object("kind";"container";"detail";String($inspection.container);"extra";"source offset "+String($inspection.source_offset)))
 	$rows.push(New object("kind";"PICT version";"detail";String($inspection.pict_version);"extra";"consumed "+String($inspection.consumed_bytes)+" bytes"))
 	$rows.push(New object("kind";"frame";"detail";"("+String($frame.left)+", "+String($frame.top)+") → ("+String($frame.right)+", "+String($frame.bottom)+")";"extra";String($frame.right-$frame.left)+" × "+String($frame.bottom-$frame.top)))
-	$rows.push(New object("kind";"resource";"detail";String($inspection.resource_id);"extra";"selection: "+String($inspection.selected_resource)+" · dpi "+String($inspection.resolution_dpi)))
+	var $resource : Text
+	$resource:="none (bare PICT)"
+	If (Value type($inspection.resource_id)=Is real)
+		$resource:=String($inspection.resource_id)
+	End if
+	var $dpi : Text
+	$dpi:="not recorded"
+	If (Value type($inspection.resolution_dpi)=Is real)
+		$dpi:=String($inspection.resolution_dpi)
+	End if
+	$rows.push(New object("kind";"resource";"detail";$resource;"extra";"resolution "+$dpi+" dpi"))
 
 	var $operations : Collection
 	$operations:=$inspection.operations
@@ -38,7 +49,7 @@ If (Bool($result.ok))
 			If ($n>1)
 				$ops:=$ops+" · "
 			End if
-			$ops:=$ops+String($operation.kind)+" 0x"+String($operation.opcode; "&x")
+			$ops:=$ops+String($operation.kind)+" "+Form.lab.opcodeHex($operation.opcode)
 		End if
 	End for each
 	If ($opCount>8)
@@ -47,6 +58,7 @@ If (Bool($result.ok))
 	$rows.push(New object("kind";"operations";"detail";String($operations.length)+" top-level";"extra";$ops))
 
 	var $diagnostics : Variant
+	var $diagnostic : Object
 	$diagnostics:=$inspection.diagnostics
 	If (Value type($diagnostics)=Is collection)
 		For each ($diagnostic; $diagnostics)
@@ -60,7 +72,7 @@ Else
 	$rows.push(New object("kind";"result";"detail";"inspect failed";"extra";String($result.failureKind)))
 	If (Value type($result.error)=Is object)
 		$rows.push(New object("kind";"error";"detail";String($result.error.code);"extra";String($result.error.message)))
-		If (Value type($result.error.offset)=Is number)
+		If (Value type($result.error.offset)=Is real)
 			$rows.push(New object("kind";"location";"detail";"offset "+String($result.error.offset);"extra";"opcode "+String($result.error.opcode)))
 		End if
 	End if

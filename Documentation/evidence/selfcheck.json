@@ -1,5 +1,5 @@
 {
-	"when": "2026-11-25T14:50:14.114Z",
+	"when": "2026-11-26T07:20:27.201Z",
 	"checks": [
 		{
 			"name": "version",
@@ -14,7 +14,7 @@
 		{
 			"name": "strict rejection",
 			"ok": true,
-			"detail": "converter: unsupported — curve/polygon/complex region outline uses portable coverage requires --fidelity approximate · exit 5"
+			"detail": "converter: unsupported — curve/polygon/complex region outline uses portable coverage requires --fidelity approximate (offset 200, opcode 81) · exit 5"
 		},
 		{
 			"name": "approximate inspect",
@@ -24,7 +24,7 @@
 		{
 			"name": "explicit font map",
 			"ok": true,
-			"detail": "without map: converter: unsupported — no explicit NFNT or outline font binding for id=7, size=3, face=0 · with map: ok"
+			"detail": "without map: converter: unsupported — no explicit NFNT or outline font binding for id=7, size=3, face=0 (offset 64, opcode 40) · with map: ok"
 		},
 		{
 			"name": "resource inventory",
@@ -55,9 +55,14 @@
 			"name": "approximate preview",
 			"ok": true,
 			"detail": "requested strict SVG, previewed PNG"
+		},
+		{
+			"name": "form option wiring",
+			"ok": true,
+			"detail": "drawing.rsrc via resource-id 128 · opcode 81 = 0x0051 · invalid: width, background · inspect: ok · convert: ok"
 		}
 	],
-	"passed": 11,
-	"total": 11,
+	"passed": 12,
+	"total": 12,
 	"finished": true
 }

@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Alias experiment: input path as output path with overwrite enabled.
 #DECLARE()
 

@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // On Load: populate samples, engine facts and the first inspection.
 #DECLARE()
 

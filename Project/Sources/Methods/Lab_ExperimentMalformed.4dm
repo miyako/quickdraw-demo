@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Malformed container experiment: broken.pict is a one-byte file.
 #DECLARE()
 

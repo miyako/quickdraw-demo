@@ -100,7 +100,7 @@ Function choice($drop : Object) : Text
 	$value:=""
 	var $index : Integer
 	$index:=-1
-	If (Value type($drop.index)=Is number)
+	If (Value type($drop.index)=Is real)
 		$index:=$drop.index
 	End if
 	If ((Value type($drop.values)=Is collection) && ($index>=0) && ($index<$drop.values.length))
@@ -128,6 +128,54 @@ Function isDecimal($text : Text) : Boolean
 Function isColor($text : Text) : Boolean
 
 	return Match regex("^[0-9A-Fa-f]{6}$"; Trim($text))
+
+// Sample-specific selection the CLI needs: drawing.rsrc holds two PICTs (pick one
+// by exact ID) and text.pict needs the explicit NFNT font map.
+Function sampleDefaults($name : Text) : Object
+
+	var $defaults : Object
+	$defaults:=New object("resourceId"; ""; "fontMap"; False)
+	If ($name="drawing.rsrc")
+		$defaults.resourceId:="128"
+	End if
+	If ($name="text.pict")
+		$defaults.fontMap:=True
+	End if
+	return $defaults
+
+// 4D's "&x" format already yields the 0x prefix ("0x0051").
+Function opcodeHex($opcode : Real) : Text
+
+	return String($opcode; "&x")
+
+// Names of numeric/colour fields that hold text the option builders will drop,
+// so the UI can say so instead of silently using the CLI default.
+Function invalidFields($form : Object) : Collection
+
+	var $invalid : Collection
+	$invalid:=New collection()
+	If ((String($form.width)#"") && Not(This.isPositiveInteger(String($form.width))))
+		$invalid.push("width")
+	End if
+	If ((String($form.height)#"") && Not(This.isPositiveInteger(String($form.height))))
+		$invalid.push("height")
+	End if
+	If ((String($form.dpi)#"") && Not(This.isDecimal(String($form.dpi))))
+		$invalid.push("DPI")
+	End if
+	If ((String($form.maxPixels)#"") && Not(This.isPositiveInteger(String($form.maxPixels))))
+		$invalid.push("max pixels")
+	End if
+	If ((String($form.resourceId)#"") && Not(This.isInteger(String($form.resourceId))))
+		$invalid.push("resource ID")
+	End if
+	If ((String($form.background)#"") && Not(This.isColor(String($form.background))))
+		$invalid.push("background")
+	End if
+	If ((String($form.highlight)#"") && Not(This.isColor(String($form.highlight))))
+		$invalid.push("highlight")
+	End if
+	return $invalid
 
 // Input-scope options only: valid for inspect, list-pictures and list-fonts.
 Function inputOptions($form : Object; $withSelection : Boolean) : Object
@@ -231,9 +279,9 @@ Function failureText($result : Object) : Text
 		If (String($result.error.message)#"")
 			$text:=$text+" — "+String($result.error.message)
 		End if
-		If (Value type($result.error.offset)=Is number)
+		If (Value type($result.error.offset)=Is real)
 			$text:=$text+" (offset "+String($result.error.offset)
-			If (Value type($result.error.opcode)=Is number)
+			If (Value type($result.error.opcode)=Is real)
 				$text:=$text+", opcode "+String($result.error.opcode)
 			End if
 			$text:=$text+")"

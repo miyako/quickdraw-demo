@@ -7,8 +7,22 @@
 # Lab_SelfCheck method the form's buttons call.
 set -euo pipefail
 
-TOOL4D=${TOOL4D:-"/Applications/4D 21 R5 (100175)/tool4d.app/Contents/MacOS/tool4d"}
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
+
+# TOOL4D overrides discovery. Otherwise prefer the build the evidence was
+# recorded with, then a provisioned tool4d, then any installed 4D's tool4d.
+if [ -z "${TOOL4D:-}" ]; then
+  for candidate in "/Applications/4D 21 R5 (100175)/tool4d.app/Contents/MacOS/tool4d" \
+      "$ROOT/tools/4dcli/tool4d.app/Contents/MacOS/tool4d" \
+      /Applications/4D*/tool4d.app/Contents/MacOS/tool4d \
+      /Applications/tool4d/tool4d.app/Contents/MacOS/tool4d; do
+    if [ -x "$candidate" ]; then TOOL4D=$candidate; break; fi
+  done
+fi
+if [ -z "${TOOL4D:-}" ] || [ ! -x "$TOOL4D" ]; then
+  echo "tool4d not found; set TOOL4D=/path/to/tool4d" >&2
+  exit 2
+fi
 SCRATCH=${SCRATCH:-$(mktemp -d)}
 REPORT=$ROOT/Documentation/evidence/selfcheck.json
 

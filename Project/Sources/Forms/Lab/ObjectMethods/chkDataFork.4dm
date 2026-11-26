@@ -1,1 +1,1 @@
-Lab_Inspect
+Lab_SelectionChanged

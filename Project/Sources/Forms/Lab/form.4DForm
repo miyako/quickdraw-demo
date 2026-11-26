@@ -202,7 +202,7 @@
 					"borderStyle": "solid",
 					"placeholder": "resource id",
 					"method": "ObjectMethods/inResourceId.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"lblContainer": {
 					"type": "text",
@@ -500,7 +500,7 @@
 					"fontSize": 11,
 					"borderStyle": "solid",
 					"method": "ObjectMethods/inDpi.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"lblWidth": {
 					"type": "text",
@@ -522,7 +522,7 @@
 					"fontSize": 11,
 					"borderStyle": "solid",
 					"method": "ObjectMethods/inWidth.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"lblHeight": {
 					"type": "text",
@@ -544,7 +544,7 @@
 					"fontSize": 11,
 					"borderStyle": "solid",
 					"method": "ObjectMethods/inHeight.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"lblMaxPixels": {
 					"type": "text",
@@ -566,7 +566,7 @@
 					"fontSize": 11,
 					"borderStyle": "solid",
 					"method": "ObjectMethods/inMaxPixels.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"lblBackground": {
 					"type": "text",
@@ -589,7 +589,7 @@
 					"borderStyle": "solid",
 					"placeholder": "RRGGBB",
 					"method": "ObjectMethods/inBackground.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"lblHighlight": {
 					"type": "text",
@@ -612,7 +612,7 @@
 					"borderStyle": "solid",
 					"placeholder": "RRGGBB",
 					"method": "ObjectMethods/inHighlight.4dm",
-					"events": ["onAfterEdit"]
+					"events": ["onDataChange"]
 				},
 				"btnConvert": {
 					"type": "button",

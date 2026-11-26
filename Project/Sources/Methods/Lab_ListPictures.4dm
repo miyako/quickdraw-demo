@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Enumerate PICT resources in the current container.
 #DECLARE()
 
@@ -13,6 +14,7 @@ If (Bool($result.ok))
 	var $inventory : Object
 	$inventory:=$result.value.inventory
 	$rows.push(New object("kind";"inventory";"detail";String($inventory.container);"extra";String($inventory.pictures.length)+" PICT resources"))
+	var $entry : Object
 	For each ($entry; $inventory.pictures)
 		var $name : Text
 		$name:=String($entry.name_hex)

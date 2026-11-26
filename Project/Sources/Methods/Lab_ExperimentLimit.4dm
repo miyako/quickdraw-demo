@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Budget experiment: max-pixels 1 must fail with resource_limit (exit 6).
 #DECLARE()
 

@@ -1,3 +1,4 @@
+//%attributes = {"invisible":true}
 // Convert the current input with the visible options, then refresh preview.
 #DECLARE()
 
@@ -39,6 +40,7 @@ If (Bool($result.ok))
 	End if
 
 	var $diagnostics : Variant
+	var $diagnostic : Object
 	$diagnostics:=$value.diagnostics
 	If (Value type($diagnostics)=Is collection)
 		For each ($diagnostic; $diagnostics)
@@ -47,12 +49,17 @@ If (Bool($result.ok))
 	End if
 
 	Form.status:="Converted "+$input.name+" → "+$output.name+" ("+String($value.bytes)+" B)"
+	var $ignored : Collection
+	$ignored:=Form.lab.invalidFields(Form)
+	If ($ignored.length>0)
+		Form.status:=Form.status+" · ignored invalid: "+$ignored.join(", ")
+	End if
 	Form.json:=JSON Stringify($value; *)
 Else
 	$rows.push(New object("kind";"result";"detail";"conversion rejected";"extra";String($result.failureKind)))
 	If (Value type($result.error)=Is object)
 		$rows.push(New object("kind";"error";"detail";String($result.error.code);"extra";String($result.error.message)))
-		If (Value type($result.error.offset)=Is number)
+		If (Value type($result.error.offset)=Is real)
 			$rows.push(New object("kind";"location";"detail";"offset "+String($result.error.offset);"extra";"opcode "+String($result.error.opcode)))
 		End if
 	End if
