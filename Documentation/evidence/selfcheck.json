@@ -1,5 +1,5 @@
 {
-	"when": "2026-11-26T07:20:27.201Z",
+	"when": "2026-11-26T07:39:09.665Z",
 	"checks": [
 		{
 			"name": "version",
@@ -34,7 +34,7 @@
 		{
 			"name": "png conversion",
 			"ok": true,
-			"detail": "selfcheck · 50391 bytes · ab64b10543169464…"
+			"detail": "selfcheck.png · 50391 bytes · ab64b10543169464…"
 		},
 		{
 			"name": "no-clobber",
@@ -60,9 +60,14 @@
 			"name": "form option wiring",
 			"ok": true,
 			"detail": "drawing.rsrc via resource-id 128 · opcode 81 = 0x0051 · invalid: width, background · inspect: ok · convert: ok"
+		},
+		{
+			"name": "sample list",
+			"ok": true,
+			"detail": "broken.pict, drawing.rsrc, flags.pict, poster.pict, text.pict"
 		}
 	],
-	"passed": 12,
-	"total": 12,
+	"passed": 13,
+	"total": 13,
 	"finished": true
 }

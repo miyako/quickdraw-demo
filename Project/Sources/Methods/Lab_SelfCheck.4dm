@@ -89,7 +89,7 @@ $bytes:=0
 If ($png.exists)
 	$bytes:=$png.size
 End if
-$checks.push(New object("name"; "png conversion"; "ok"; (Bool($converted.ok)) && ($bytes>0); "detail"; $png.name+" · "+String($bytes)+" bytes · "+Substring($lab.digest($png); 1; 16)+"…"))
+$checks.push(New object("name"; "png conversion"; "ok"; (Bool($converted.ok)) && ($bytes>0); "detail"; $png.fullName+" · "+String($bytes)+" bytes · "+Substring($lab.digest($png); 1; 16)+"…"))
 
 // 8. no-clobber: an existing output is refused instead of replaced.
 var $noClobber : Object
@@ -149,6 +149,12 @@ $badForm:=New object("width"; "12x"; "dpi"; "72"; "background"; "GG0000"; "resou
 var $invalid : Collection
 $invalid:=$lab.invalidFields($badForm)
 $checks.push(New object("name"; "form option wiring"; "ok"; (Bool($wiredInspect.ok)) && (Bool($wiredConvert.ok)) && ($wiredInspect.value.inspection.resource_id=128) && ($hexOk) && ($invalid.length=2) && ($invalid.indexOf("width")>=0) && ($invalid.indexOf("background")>=0); "detail"; "drawing.rsrc via resource-id 128 · opcode 81 = "+$lab.opcodeHex(81)+" · invalid: "+$invalid.join(", ")+" · inspect: "+$lab.failureText($wiredInspect)+" · convert: "+$lab.failureText($wiredConvert)))
+
+// 13. the sample dropdown is fed by samples(): file names with extension, only
+// PICT and resource files (font.nfnt and fonts.json are not samples).
+var $samples : Collection
+$samples:=$lab.samples()
+$checks.push(New object("name"; "sample list"; "ok"; ($samples.length=5) && ($samples.indexOf("poster.pict")>=0) && ($samples.indexOf("drawing.rsrc")>=0) && ($samples.indexOf("font.nfnt")<0) && ($lab.sampleFile($samples[0]).exists); "detail"; $samples.join(", ")))
 
 var $passed : Integer
 $passed:=0

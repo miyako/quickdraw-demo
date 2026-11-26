@@ -11,7 +11,8 @@ If (Bool($preview.result.ok))
 	var $value : Object
 	$value:=$preview.result.value
 	$info:="Approximate PNG preview · "+String($value.width)+"×"+String($value.height)+" · "+String($value.bytes)+" B"
-	If (Value type($convertResult)=Is object)
+	// A Null Object parameter still has Value type Is object: test Null first.
+	If ($convertResult#Null)
 		If (Bool($convertResult.ok))
 			$info:=$info+" · requested output verified"
 		Else

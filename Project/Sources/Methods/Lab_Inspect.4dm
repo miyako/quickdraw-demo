@@ -67,7 +67,7 @@ If (Bool($result.ok))
 	End if
 
 	Form.inspect:="PICT v"+String($inspection.pict_version)+" · "+String($inspection.container)+" · "+String($operations.length)+" operations · "+String($inspection.consumed_bytes)+" bytes consumed"
-	Form.status:="Inspected "+$input.name
+	Form.status:="Inspected "+$input.fullName
 Else
 	$rows.push(New object("kind";"result";"detail";"inspect failed";"extra";String($result.failureKind)))
 	If (Value type($result.error)=Is object)

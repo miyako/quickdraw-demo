@@ -23,7 +23,7 @@ If (Bool($result.ok))
 		End if
 		$rows.push(New object("kind";"PICT "+String($entry.resource_id);"detail";$name;"extra";String($entry.length)+" B @ offset "+String($entry.offset)+" · "+String($entry.source)))
 	End for each
-	Form.status:="Listed "+String($inventory.pictures.length)+" PICT resources in "+$input.name
+	Form.status:="Listed "+String($inventory.pictures.length)+" PICT resources in "+$input.fullName
 Else
 	$rows.push(New object("kind";"result";"detail";"list-pictures — failed";"extra";String($result.failureKind)))
 	If (Value type($result.error)=Is object)

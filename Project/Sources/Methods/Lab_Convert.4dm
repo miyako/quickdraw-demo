@@ -48,7 +48,7 @@ If (Bool($result.ok))
 		End for each
 	End if
 
-	Form.status:="Converted "+$input.name+" → "+$output.name+" ("+String($value.bytes)+" B)"
+	Form.status:="Converted "+$input.fullName+" → "+$output.fullName+" ("+String($value.bytes)+" B)"
 	var $ignored : Collection
 	$ignored:=Form.lab.invalidFields(Form)
 	If ($ignored.length>0)

@@ -163,4 +163,13 @@ The original 11 checks only drove the class, so these shipped unnoticed:
   `selected_resource`), and several `For each` variables were undeclared.
 * Form-dependent project methods were visible in Run Method; they are now
   `invisible`. `.gitignore` tool entries are anchored per `4dproject`.
+* **`File.extension` keeps its dot and `File.name` drops the extension.**
+  `samples()` compared against `"pict"`, so the Sample dropdown was empty on
+  open and Inspect/Preview never ran; found only by opening the form in 4D.
+  Status lines used `.name` and lost the extension (`fullName` now).
+* **A Null Object parameter still has `Value type` `Is object`**, so previews
+  without a conversion claimed "the strict conversion above was rejected".
+* `FORM SCREENSHOT` captures of this form are transparent in dark appearance;
+  composite over `#1E1E1E` before judging layout (see `4dform`
+  screenshot-rendering).
 

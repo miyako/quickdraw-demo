@@ -18,7 +18,7 @@ If (Bool($result.ok))
 	For each ($entry; $inventory.resources)
 		$rows.push(New object("kind";String($entry.type)+" "+String($entry.resource_id);"detail";String($entry.name_hex);"extra";String($entry.length)+" B @ offset "+String($entry.offset)))
 	End for each
-	Form.status:="Listed "+String($inventory.resources.length)+" font resources in "+$input.name
+	Form.status:="Listed "+String($inventory.resources.length)+" font resources in "+$input.fullName
 Else
 	$rows.push(New object("kind";"result";"detail";"list-fonts — failed";"extra";String($result.failureKind)))
 	If (Value type($result.error)=Is object)

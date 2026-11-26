@@ -49,9 +49,10 @@ Function samples() : Collection
 	var $file : 4D.File
 	For each ($file; This.samplesFolder.files())
 		var $extension : Text
+		// File.extension keeps its dot (".pict") and File.name drops it.
 		$extension:=Lowercase($file.extension)
-		If (($extension="pict") || ($extension="rsrc"))
-			$names.push($file.name)
+		If (($extension=".pict") || ($extension=".rsrc"))
+			$names.push($file.fullName)
 		End if
 	End for each
 	$names.sort()
